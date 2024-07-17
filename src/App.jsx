@@ -28,51 +28,54 @@ import UserBookMark from "./pages/User/UserBookMark/UserBookMark";
 // 준영
 
 function App() {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(
-          setUser({
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-          })
-        );
-      } else {
-        dispatch(clearUser());
-      }
-    });
-    return () => unsubscribe();
-  }, [dispatch]);
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			if (user) {
+				dispatch(
+					setUser({
+						uid: user.uid,
+						email: user.email,
+						displayName: user.displayName,
+					})
+				);
+			} else {
+				dispatch(clearUser());
+			}
+		});
+		return () => unsubscribe();
+	}, [dispatch]);
 
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/map" element={<TravelMapPage />} />
+	return (
+		<div>
+			<Routes>
+				<Route path="/" element={<AppLayout />}>
+					<Route index element={<HomePage />} />
+					<Route path="/map" element={<TravelMapPage />} />
 
-          <Route path="/attractions">
-            <Route index element={<AttractionsPage />} />      
-            <Route path=":contentId" element={<AttractionsDetailPage />} />
-          </Route>
+					<Route path="/attractions">
+						<Route index element={<AttractionsPage />} />
+						<Route
+							path=":contentId"
+							element={<AttractionsDetailPage />}
+						/>
+					</Route>
 
-          {/* user */}
-          <Route path="/signup" element={<UserSignUp />} />
-          <Route path="/signin" element={<UserSignIn />} />
+					{/* user */}
+					<Route path="/signup" element={<UserSignUp />} />
+					<Route path="/signin" element={<UserSignIn />} />
 
-          {/* mypage */}
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/likes" element={<UserLikes />} />
-          <Route path="/books" element={<UserBookMark />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <ChatBot />
-    </div>
-  );
+					{/* mypage */}
+					<Route path="/mypage" element={<MyPage />} />
+					<Route path="/likes" element={<UserLikes />} />
+					<Route path="/books" element={<UserBookMark />} />
+				</Route>
+				<Route path="*" element={<NotFoundPage />} />
+			</Routes>
+			<ChatBot />
+		</div>
+	);
 }
 
 export default App;

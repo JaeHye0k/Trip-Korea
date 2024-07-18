@@ -35,6 +35,10 @@ const UserSignUp = () => {
 				email,
 				password
 			);
+			// 아래 구문이 없으면 새로고침시 표시된 이름이 사라짐
+			await updateProfile(userCredential.user, {
+				displayName: name,
+			});
 			dispatch(
 				setUser({
 					email: userCredential.user.email,

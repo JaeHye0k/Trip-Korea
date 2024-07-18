@@ -18,14 +18,17 @@ const AppLayout = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isFocused, setIsFocused] = useState(false);
 	const currentUser = useSelector((state) => state.auth.currentUser); // 현재 사용자 상태를 가져온다.
 	const [searchParams, setSearchParams] = useSearchParams();
 	const navQuery = searchParams.get("query");
 
+	// 사이드바 토글
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
+	// 사이드바에서 메뉴 클릭 시
 	const navigateTo = (path) => {
 		navigate(path);
 		setIsMenuOpen(false); // 메뉴 선택 후 메뉴 닫기
@@ -47,12 +50,7 @@ const AppLayout = () => {
 		}
 	};
 
-	const [isFocused, setIsFocused] = useState(false);
-
-	// useEffect(() => {
-	//  console.log("현재 사용자 상태:", currentUser ? "로그인" : "로그아웃");
-	// }, [currentUser]); // currentUser를 의존성 배열에 추가하여 상태 변화 감지
-	const submitHandler = (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		navigate(`/attractions?query=${navQuery}`);
 		getQueryAttraction();
@@ -111,7 +109,7 @@ const AppLayout = () => {
 						className={`searchbox ${
 							isFocused ? "searchbox-focused" : ""
 						}`}
-						onSubmit={submitHandler}
+						onSubmit={handleSubmit}
 					>
 						<input
 							className="input"
@@ -130,11 +128,11 @@ const AppLayout = () => {
 
 						<FontAwesomeIcon
 							icon={faMagnifyingGlass}
-							onClick={submitHandler}
+							onClick={handleSubmit}
 						/>
 					</form>
+					{/* 모바일 일때 메뉴 안보이게 하는 css */}
 					<div className="moblieLoginBtn">
-						{/* 모바일 일때 메뉴 안보이게 하는 css */}
 						{currentUser ? (
 							<Button onClick={handleLogout}>로그아웃</Button> // 로그인 상태일 때 로그아웃 버튼 표시
 						) : (

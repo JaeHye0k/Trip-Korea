@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase";
-import { Form, Logo, Wrapper, Error } from "../UserSignUp/styled";
+import { Form, Logo, Wrapper, Error } from "../styled";
 import UserTitle from "../components/UserTitle";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../../src/redux/user/auth/authSlice";
@@ -19,7 +19,6 @@ const UserSignIn = () => {
 		const { name, value } = e.target;
 		if (name === "email") setEmail(value);
 		else if (name === "password") setPassword(value);
-		console.log(name, value);
 	};
 
 	const handleSubmit = async (e) => {

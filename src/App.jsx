@@ -10,6 +10,7 @@ import ChatBot from "./common/ChatBot/ChatBot";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { setUser, clearUser } from "./redux/user/auth/authSlice";
 
 // signUp, In
@@ -31,7 +32,7 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				dispatch(
 					setUser({
@@ -44,8 +45,8 @@ function App() {
 				dispatch(clearUser());
 			}
 		});
-		return () => unsubscribe();
-	}, [dispatch]);
+		// return () => unsubscribe();
+	}, []);
 
 	return (
 		<div>
